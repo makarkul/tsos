@@ -3,7 +3,7 @@ import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css";
 
 // xterm.js gives us a REAL terminal in the browser — blinking cursor and all.
-// Feeling like a real computer matters a lot for getting kids excited.
+// Feeling like a real computer matters a lot for getting people excited.
 
 const PROMPT = "tsos> ";
 

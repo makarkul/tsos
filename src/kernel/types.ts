@@ -32,7 +32,7 @@ export type ProcessState = "new" | "ready" | "running" | "blocked" | "terminated
  * kernel uses a `switch` on that field to know what to do. TypeScript makes
  * sure we handle every single case (see the kernel's exhaustiveness check).
  *
- * Kids NEVER write these objects by hand — they call the `sys.*` helpers,
+ * You never write these objects by hand — you call the `sys.*` helpers,
  * which build them. So this union is an engine-internal secret.
  */
 export type Syscall =
@@ -47,7 +47,7 @@ export type Syscall =
  * The `sys` toolbox handed to every program. These helpers just *build*
  * Syscall requests — the kernel is what actually carries them out.
  *
- * Keep this list TINY. It is the entire world a kid's program can see.
+ * Keep this list TINY. It is the entire world a program can see.
  */
 export interface Sys {
   /** Write one line to the terminal. */
@@ -72,14 +72,14 @@ export interface Sys {
  *
  * The third generator type parameter is `any` on purpose: different syscalls
  * resume with different kinds of value (read -> string, getPid -> number),
- * and we don't want to make kids juggle that on their first day.
+ * and we don't want to make you juggle that on day one.
  */
 export type Program = (
   sys: Sys,
   args: string[],
 ) => Generator<Syscall, void, any>;
 
-/** What a kid's PROGRAM file exports (with `export default`). */
+/** What a PROGRAM file exports (with `export default`). */
 export interface ProgramModule {
   /** The name you type after `run`. e.g. "clock" so you can `run clock`. */
   name: string;
@@ -103,7 +103,7 @@ export interface CommandContext {
   kernel: Kernel;
 }
 
-/** What a kid's COMMAND file exports (with `export default`). */
+/** What a COMMAND file exports (with `export default`). */
 export interface Command {
   /** The word you type to run it, e.g. "echo". */
   name: string;

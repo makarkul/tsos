@@ -14,7 +14,7 @@ You don't need to read this to contribute. But it's the fun part, so here it is.
 **TSOS runs entirely in the web browser.** There's no server, no install of an
 OS, nothing to flash onto hardware. You open a web page and you're using TSOS.
 
-We chose the browser on purpose, because it gives kids the fastest possible
+We chose the browser on purpose, because it gives you the fastest possible
 **feedback loop**, which is the single most important thing for learning:
 
 ```

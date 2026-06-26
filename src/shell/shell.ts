@@ -5,7 +5,7 @@ import type { Command, CommandContext } from "../kernel/types";
 // -- Auto-discover every command file in commands/ ---------------------------
 //
 // `import.meta.glob` is a Vite superpower: it finds every matching file for us.
-// So when a kid drops a new file into commands/, it just shows up — there is
+// So when you drop a new file into commands/, it just shows up — there is
 // NO central list to edit, which means NO merge conflicts between teammates.
 //
 // Each command file does `export default { name, describe, run }`.
