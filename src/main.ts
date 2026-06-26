@@ -13,10 +13,12 @@ import { Dashboard } from "./ui/dashboard";
 import { programs } from "./programs";
 
 const BANNER = [
-  "  _____ ___   ___  ___",
-  " |_   _/ __| / _ \\/ __|",
-  "   | | \\__ \\| (_) \\__ \\",
-  "   |_| |___/ \\___/|___/",
+  "",
+  "  _____ ____   ___  ____",
+  " |_   _/ ___| / _ \\/ ___|",
+  "   | | \\___ \\| | | \\___ \\",
+  "   | |  ___) | |_| |___) |",
+  "   |_| |____/ \\___/|____/",
   "",
   " TSOS — a tiny operating system you can watch.",
   ' Type "help" and press Enter to begin.',
