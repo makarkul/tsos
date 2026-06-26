@@ -1,6 +1,7 @@
 # TSOS 🖥️
 
 [![CI](https://github.com/makarkul/tsos/actions/workflows/ci.yml/badge.svg)](https://github.com/makarkul/tsos/actions/workflows/ci.yml)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 **A tiny operating system you can _watch_ — built with TypeScript.**
 
@@ -125,6 +126,17 @@ TSOS **simulates** an operating system to make its hidden parts _visible_. It is
 on top of a lot of software already. And that's on purpose: the goal is to **see
 and build** how an OS thinks (how it picks what runs next, how a program waits for
 input), not to replace Windows. 🙂
+
+---
+
+## License
+
+TSOS is free software, licensed under the **GNU General Public License v3.0 or
+later** (GPL-3.0-or-later). The full text is in [LICENSE](LICENSE).
+
+In plain terms: you're free to use, study, share, and modify TSOS — and anything
+you build on it stays free under the same license, so the next class can learn
+from it too. That copyleft spirit fits a teaching project meant to be passed on.
 
 ---
 

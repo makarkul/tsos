@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "TSOS — a tiny, browser-based operating system simulator you can watch, built by (and for) 8th graders learning TypeScript.",
+  "description": "TSOS — a tiny, browser-based operating-system simulator you can watch and build, written in TypeScript.",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
