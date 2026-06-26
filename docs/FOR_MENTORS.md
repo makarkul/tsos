@@ -10,21 +10,36 @@ that the language shows up exactly when a kid needs it.
 
 ---
 
+## The three phases
+
+TSOS is designed to be learned in three phases. Kids don't start in the engine —
+they build up to it. The kernel is the **destination**, not a no-go zone.
+
+- **Phase 1 — Commands (`src/shell/commands/`).** Each kid adds their own small
+  command file copied from `_template.ts`. Learns the TypeScript and tooling
+  basics, and the edit → save → see-it loop.
+- **Phase 2 — Programs (`src/programs/`).** Each kid adds their own program file
+  that runs as a real process. Learns generators/`yield`, input, loops, arrays —
+  and starts watching process states change on the dashboard.
+- **Phase 3 — Kernel features (`src/kernel/`).** Now the kids go _inside_ the
+  engine: a new syscall, a smarter scheduler, preemption. This is where the real
+  operating-system learning happens, and it's the most exciting part of the
+  project. You lead these; details are in "Extending the engine" below.
+
+In Phases 1 and 2, because of the auto-discovery setup (Vite's `import.meta.glob`),
+**adding a file is all it takes** to register a program or command — there's no
+shared registry file for everyone to fight over, so merge conflicts basically
+vanish, and a 25-kid classroom just works. Phase 3 touches shared engine files,
+so it's done more deliberately (one focused change at a time, on its own branch,
+with you).
+
 ## Your role: the "anchor"
 
-The codebase splits cleanly into two zones:
-
-- **Engine (`src/kernel/`, `src/ui/`) — yours.** This is the hard part: the
-  scheduler, the generator-based syscall loop, the event system. It's written and
-  commented for _you_ to maintain and to explain. Kids never have to open it (but
-  the comments are there for the curious one who does).
-- **Kid territory (`src/programs/`, `src/shell/commands/`) — theirs.** Tiny,
-  self-contained files, one per kid, each copied from a `_template.ts`.
-
-This division is what makes a 25-kid classroom workable. Because of the
-auto-discovery setup (Vite's `import.meta.glob`), **adding a file is all it takes
-to register a program or command** — there is no shared registry file for
-everyone to fight over, so merge conflicts basically vanish.
+You're the technical anchor. Early on that means unblocking setup and git nerves
+and answering "why is this red?" By Phase 3 it means pairing with kids on real
+engine changes — you don't have to pre-build the kernel features, you build them
+_with_ the kids as the payoff of everything they learned in Phases 1 and 2. The
+kernel is heavily commented precisely so you can do this together.
 
 ---
 
@@ -50,14 +65,14 @@ After the first one lands, contributions speed up a lot.
 
 A rough term plan (adapt freely):
 
-| Weeks | Focus                                                                 |
-| ----- | --------------------------------------------------------------------- |
-| 1–2   | Setup. Get everyone to a running TSOS and a first tiny **command**.   |
-| 3–4   | First **program** (Rung 2). The git/PR routine becomes normal.        |
-| 5–6   | **Input** (Rung 3) — the "Blocked state" aha moment on the dashboard. |
-| 7–8   | **Arrays & files** (Rungs 4–5). Kids make real little apps.           |
-| 9–10  | **Own types & functions** (Rung 6). Pair stronger kids on `rps`, games.|
-| 11+   | **Stretch / engine** (Rungs 7–8) with you. The runaway-process demo, preemption. |
+| Weeks | Phase   | Focus                                                              |
+| ----- | ------- | ----------------------------------------------------------------- |
+| 1–2   | Phase 1 | Setup. Get everyone to a running TSOS and a first tiny **command**. |
+| 3–4   | Phase 2 | First **program** (Rung 2). The git/PR routine becomes normal.     |
+| 5–6   | Phase 2 | **Input** (Rung 3) — the "Blocked state" aha moment on the dashboard. |
+| 7–8   | Phase 2 | **Arrays & files** (Rungs 4–5). Kids make real little apps.        |
+| 9–10  | Phase 2 | **Own types & functions** (Rung 6). Pair stronger kids on `rps`, games. |
+| 11+   | Phase 3 | **Into the kernel** (Rungs 7–8) with you. The runaway-process demo, new syscalls, preemption. |
 
 See [CURRICULUM.md](CURRICULUM.md) for the full ladder and
 [FIRST_TASKS.md](FIRST_TASKS.md) for a ready-made task menu.
@@ -110,10 +125,10 @@ make them easy:
 
 ---
 
-## Extending the engine
+## Extending the engine (Phase 3)
 
-When you're ready to go under the hood with advanced kids, good first engine
-changes (each is a guided tour of a real OS concept):
+When the kids are ready to go under the hood, good first engine changes (each is a
+guided tour of a real OS concept):
 
 - **A new syscall** (e.g. `sys.random()`): touch `types.ts` (add to the union),
   `syscalls.ts` (add the helper), and `kernel.ts` (handle the new case — the
