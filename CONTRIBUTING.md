@@ -38,15 +38,21 @@ it gets fast.
 
 ## 2. The Golden Rules
 
-1. **You only edit your OWN file.** Make a new file in `src/programs/` or
-   `src/shell/commands/` by copying the `_template.ts`. Don't edit other
-   people's files or the `kernel/` folder. This is what lets the whole class
-   work at the same time without conflicts.
-2. **Start from the template.** Don't start from a blank file. Copy
+1. **In Phase 1 and 2, work in your OWN new file.** Make a new file in
+   `src/shell/commands/` or `src/programs/` by copying the `_template.ts`, and
+   don't edit other people's files. This is what lets the whole class work at the
+   same time without conflicts. (Phase 3 is different — see the next rule.)
+2. **The kernel is the destination, not a no-go zone.** Once you're comfortable
+   with commands and programs, you'll change `src/kernel/` itself — that's where
+   the real operating-system learning happens. Because lots of people can touch
+   the same engine files, Phase 3 work is done **together with your mentor**, one
+   focused change at a time, on its own branch. See
+   [docs/CURRICULUM.md](docs/CURRICULUM.md) Rung 8.
+3. **Start from the template.** Don't start from a blank file. Copy
    `_template.ts`, rename it, and change what's inside.
-3. **Small is good.** A program that prints one funny message is a perfect first
+4. **Small is good.** A program that prints one funny message is a perfect first
    contribution. You can always make it fancier later.
-4. **If it's red, read it.** When TypeScript underlines something in red, hover
+5. **If it's red, read it.** When TypeScript underlines something in red, hover
    over it. The message is usually telling you exactly what's wrong.
 
 ---

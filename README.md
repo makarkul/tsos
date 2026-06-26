@@ -2,15 +2,18 @@
 
 [![CI](https://github.com/makarkul/tsos/actions/workflows/ci.yml/badge.svg)](https://github.com/makarkul/tsos/actions/workflows/ci.yml)
 
-**A tiny operating system you can _watch_ — built by 8th graders, in TypeScript.**
+**A tiny operating system you can _watch_ — built with TypeScript.**
 
-TSOS is a pretend operating system that runs in your web browser. It has a real
-terminal, a filesystem, programs, and a little "kernel" that runs everything.
-The cool part: a **live dashboard** shows you what the OS is doing on the inside
-— you can watch programs start, run, wait, and finish in real time.
+TSOS is a working operating-system simulator that runs in your web browser. It
+has a real terminal, a filesystem, programs, a scheduler, and a small **kernel**
+that runs everything. The cool part: a **live dashboard** shows what the OS is
+doing on the inside — you watch processes start, run, wait, and finish in real
+time.
 
-You build TSOS by writing small programs and commands. Along the way, you learn
-real TypeScript — not from a lecture, but by making things that actually run.
+TSOS is also a way to **learn how operating systems work, using TypeScript as the
+language.** You don't read about schedulers and syscalls — you build them. And
+you pick up real TypeScript along the way, not from a lecture, but by making
+things that actually run.
 
 ![TSOS: a terminal on the left, a live process table on the right](docs/screenshot.png)
 
@@ -44,20 +47,40 @@ your change instantly. That fast loop is the whole point. ✨
 
 ---
 
-## What can I make?
+## Your learning pathway
 
-Two kinds of things, and **you only ever edit your own file** so you never
-collide with a teammate:
+You don't start in the deep end — you build up to the kernel. Each phase teaches
+the next, in both OS concepts and TypeScript. **The kernel isn't off-limits; it's
+the destination.**
 
-| You write a…  | …by adding a file in    | …and you can then type | Example                 |
-| ------------- | ----------------------- | ---------------------- | ----------------------- |
-| **Program**   | `src/programs/`         | `run yourname`         | a game, a clock, a quiz |
-| **Command**   | `src/shell/commands/`   | `yourname`             | `echo`, `ls`, a joke    |
+### Phase 1 — Commands (start here)
 
-Each folder has a `_template.ts` file. **Copy it, rename it, fill in the
-blanks.** That's your first contribution.
+Add small shell commands in `src/shell/commands/` (a `joke`, a `roll`, an `add`).
+You type them straight into the terminal.
+**You learn:** the basics — variables, strings, functions, types, and the
+edit → save → see-it loop. Your first real contribution.
 
-👉 **New here? Open [docs/FIRST_TASKS.md](docs/FIRST_TASKS.md) and pick a task.**
+### Phase 2 — Programs
+
+Write programs in `src/programs/` that run as real **processes** (a countdown, a
+quiz, a game). Type `run yourprogram` and watch it appear in the dashboard.
+**You learn:** generators and `yield`, loops, reading input, arrays — and you
+start to *see* process states (Ready, Running, Blocked) change as your code runs.
+
+### Phase 3 — Kernel features
+
+Now you understand processes from the outside, so you go **inside the engine**
+(`src/kernel/`). Add a new syscall, change how the scheduler picks who runs next,
+or build **preemption** so the OS can interrupt a program.
+**You learn:** how an operating system actually works — and more advanced
+TypeScript (discriminated unions, exhaustive `switch`, the `never` type) that the
+engine uses to keep itself correct.
+
+The kernel is heavily commented exactly so you can grow into it. When you get
+there, work with your mentor — these are the most exciting changes in the project.
+
+👉 **New here? Open [docs/FIRST_TASKS.md](docs/FIRST_TASKS.md), grab a Phase 1
+task, and go.** The full ladder is in [docs/CURRICULUM.md](docs/CURRICULUM.md).
 
 ---
 
@@ -65,41 +88,43 @@ blanks.** That's your first contribution.
 
 ```
 src/
-  kernel/      ← the engine. The "hard parts." You don't need to touch this.
   shell/
-    commands/  ← YOUR TERRITORY: one file per command
-  programs/    ← YOUR TERRITORY: one file per program
+    commands/  ← Phase 1: one file per command
+  programs/    ← Phase 2: one file per program
+  kernel/      ← Phase 3: the engine (scheduler, processes, syscalls, filesystem)
   ui/          ← the terminal + dashboard on screen
 ```
 
-- **`kernel/`** is the engine your mentor maintains. It's heavily commented, so
-  peek inside when you're curious — but you never _have_ to.
-- **`programs/`** and **`commands/`** are yours. Small, self-contained files.
+- **`commands/`** and **`programs/`** hold small, self-contained files. In these
+  phases you add a new file (copy a `_template.ts`), so you can work alongside
+  teammates without collisions.
+- **`kernel/`** is the engine. It's heavily commented and built to be read and
+  changed — that's Phase 3, where the real OS learning happens.
 
-There's a deeper tour of how it all fits together in
+There's a guided tour of how it all fits together in
 **[docs/EMULATOR.md](docs/EMULATOR.md)**.
 
 ---
 
 ## The docs
 
-| Doc                                          | What's in it                                                       |
-| -------------------------------------------- | ----------------------------------------------------------------- |
-| **[CONTRIBUTING.md](CONTRIBUTING.md)**       | How to set up, the golden rules, and how to share your work (git) |
-| **[docs/FIRST_TASKS.md](docs/FIRST_TASKS.md)** | A menu of starter tasks, easiest first. **Start here.**         |
-| **[docs/CURRICULUM.md](docs/CURRICULUM.md)** | The learning ladder: what TypeScript you pick up at each step      |
-| **[docs/EMULATOR.md](docs/EMULATOR.md)**     | How the "OS" actually works (the fun internals)                   |
-| **[docs/FOR_MENTORS.md](docs/FOR_MENTORS.md)** | For teachers/parents: how to run this with a group              |
+| Doc                                            | What's in it                                                      |
+| ---------------------------------------------- | ---------------------------------------------------------------- |
+| **[CONTRIBUTING.md](CONTRIBUTING.md)**         | How to set up, how to work without collisions, sharing work (git) |
+| **[docs/FIRST_TASKS.md](docs/FIRST_TASKS.md)** | A menu of tasks, easiest first. **Start here.**                  |
+| **[docs/CURRICULUM.md](docs/CURRICULUM.md)**   | The learning ladder: the OS + TypeScript you pick up at each step  |
+| **[docs/EMULATOR.md](docs/EMULATOR.md)**       | How the OS actually works (the fun internals)                     |
+| **[docs/FOR_MENTORS.md](docs/FOR_MENTORS.md)** | For mentors/teachers: how to run this with a group               |
 
 ---
 
 ## What this is (and isn't)
 
 TSOS **simulates** an operating system to make its hidden parts _visible_. It is
-**not** a real OS that boots a computer — TypeScript runs inside the browser, on
-top of a lot of software already. And that's on purpose: the goal is to **see**
-how an OS thinks (how it picks what runs next, how a program waits for input),
-not to replace Windows. 🙂
+**not** a real OS that boots bare hardware — TypeScript runs inside the browser,
+on top of a lot of software already. And that's on purpose: the goal is to **see
+and build** how an OS thinks (how it picks what runs next, how a program waits for
+input), not to replace Windows. 🙂
 
 ---
 

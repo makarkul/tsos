@@ -1,8 +1,9 @@
 // ===========================================================================
 // TSOS core types — the vocabulary the whole engine speaks.
 //
-// Kids generally never need to open this file. But it's commented carefully
-// so that when a curious 13-year-old DOES peek inside, it makes sense.
+// This is engine code (Phase 3). You don't need it to write commands and
+// programs — but it's commented carefully so that when you're ready to work on
+// the kernel itself, it reads clearly and you can build on it.
 // ===========================================================================
 
 import type { FileSystem } from "./filesystem";
