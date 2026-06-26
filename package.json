@@ -1,0 +1,21 @@
+{
+  "name": "tsos",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TSOS — a tiny, browser-based operating system simulator you can watch, built by (and for) 8th graders learning TypeScript.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/xterm": "^5.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^6.0.7"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  // TSOS runs in strict mode — TypeScript is one of our teachers here.
+  // The compiler catches typos and type mistakes so kids get instant,
+  // friendly feedback in their editor instead of confusing runtime bugs.
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+
+    // Strict type-checking: the good stuff. This is what makes the editor
+    // underline mistakes for you.
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // On purpose we DON'T turn on noUnusedLocals / noUnusedParameters.
+    // A kid copying a template might not use `args` yet, and we don't want
+    // the build to break over that. Strict *type safety*, gentle on style.
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": ["src"]
+}

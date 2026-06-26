@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TSOS — a tiny operating system you can watch</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🖥️</text></svg>"
+    />
+  </head>
+  <body>
+    <!-- Left: the terminal. Right: the live dashboard. -->
+    <div id="app">
+      <div id="terminal" class="pane"></div>
+      <div id="dashboard" class="pane"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
