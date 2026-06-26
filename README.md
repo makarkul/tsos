@@ -1,5 +1,7 @@
 # TSOS 🖥️
 
+[![CI](https://github.com/makarkul/tsos/actions/workflows/ci.yml/badge.svg)](https://github.com/makarkul/tsos/actions/workflows/ci.yml)
+
 **A tiny operating system you can _watch_ — built by 8th graders, in TypeScript.**
 
 TSOS is a pretend operating system that runs in your web browser. It has a real

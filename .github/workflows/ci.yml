@@ -1,0 +1,23 @@
+name: CI
+
+# Runs the same health check every contributor runs locally: `npm run build`
+# (TypeScript in strict mode + the Vite bundler). Green means a contribution is
+# safe to merge, so reviewing a kid's PR is mostly "is CI green?" — not the
+# mentor reading every line.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
