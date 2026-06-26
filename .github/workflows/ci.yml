@@ -2,13 +2,16 @@ name: CI
 
 # Runs the same health check every contributor runs locally: `npm run build`
 # (TypeScript in strict mode + the Vite bundler). Green means a contribution is
-# safe to merge, so reviewing a kid's PR is mostly "is CI green?" — not the
-# mentor reading every line.
+# safe to merge, so reviewing a PR is mostly "is CI green?" — not the mentor
+# reading every line.
+#
+# It runs on every push to any branch (so you see green/red on your own branch
+# before you even open a PR) and on every pull request.
 
 on:
-  pull_request:
   push:
-    branches: [main]
+    branches: ["**"]
+  pull_request:
 
 jobs:
   build:
