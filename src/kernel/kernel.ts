@@ -17,12 +17,7 @@ import { Emitter } from "./events";
 import { createProcess, type Process } from "./process";
 import { Scheduler } from "./scheduler";
 import { makeSys } from "./syscalls";
-import type {
-  KernelSnapshot,
-  ProgramModule,
-  Sys,
-  Syscall,
-} from "./types";
+import type { KernelSnapshot, ProgramModule, Sys, Syscall } from "./types";
 
 /**
  * How long the kernel waits between steps, in milliseconds. We run ONE
@@ -231,7 +226,28 @@ export class Kernel {
     proc.waitingOn = null;
     this.scheduler.enqueue(proc);
   }
+  //kill process 
+  killProcess(target: string): boolean {
+    let proc: Process | undefined;
 
+    const pid = Number(target);
+
+    if (!Number.isNaN(pid)) {
+      proc = this.table.get(pid);
+    } else {
+      proc = [...this.table.values()].find((p) => p.name === target);
+    }
+
+    if (!proc) {
+      return false;
+    }
+
+    this.kill(proc);
+
+    this.emit();
+
+    return true;
+  }
   /** End a process and forget about it everywhere. */
   private kill(proc: Process): void {
     proc.state = "terminated";
