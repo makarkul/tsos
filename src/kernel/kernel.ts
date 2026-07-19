@@ -226,26 +226,27 @@ export class Kernel {
     proc.waitingOn = null;
     this.scheduler.enqueue(proc);
   }
-  //kill process 
+  //kill process
   killProcess(target: string): boolean {
-    let proc: Process | undefined;
-
     const pid = Number(target);
-
     if (!Number.isNaN(pid)) {
-      proc = this.table.get(pid);
-    } else {
-      proc = [...this.table.values()].find((p) => p.name === target);
+      const proc = this.table.get(pid);
+      if (!proc) {
+        return false;
+      }
+      this.kill(proc);
+      this.emit();
+      return true;
     }
-
-    if (!proc) {
+    // kill all processes with same name
+    const matches = [...this.table.values()].filter((p) => p.name === target);
+    if (matches.length === 0) {
       return false;
     }
-
-    this.kill(proc);
-
+    for (const proc of matches) {
+      this.kill(proc);
+    }
     this.emit();
-
     return true;
   }
   /** End a process and forget about it everywhere. */
