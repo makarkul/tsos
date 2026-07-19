@@ -18,5 +18,6 @@ export function makeSys(): Sys {
     spawn: (program, args = []) => ({ type: "spawn", program, args }),
     exit: () => ({ type: "exit" }),
     getPid: () => ({ type: "getPid" }),
+    random: (max) => ({ type: "random", max }),
   };
 }

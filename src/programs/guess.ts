@@ -7,7 +7,7 @@ const guess: ProgramModule = {
   name: "guess",
   describe: "Guess my number, 1–100. Shows the Blocked state clearly.",
   run: function* (sys) {
-    const secret = Math.floor(Math.random() * 100) + 1;
+    const secret = (yield sys.random(100)) + 1;
     yield sys.print("I'm thinking of a number between 1 and 100.");
 
     while (true) {

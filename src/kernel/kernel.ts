@@ -206,6 +206,11 @@ export class Kernel {
         this.readers.push(proc);
         break;
 
+      case "random":
+        proc.resumeValue = Math.floor(Math.random() * call.max);
+        this.makeReady(proc);
+        break;
+
       case "exit":
         this.kill(proc);
         break;

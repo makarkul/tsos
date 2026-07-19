@@ -13,16 +13,25 @@ const myProgram: ProgramModule = {
   run: function* (sys) {
     yield sys.print("type rock, paper, or Scissors:");
 
-    const playerMove = (yield sys.read()).toLowerCase() as Move;
+    const playerMoveInput = (yield sys.read()).toLowerCase();
 
     //pick random move
     const moves: Move[] = ["rock", "paper", "scissors"];
+
+    //check if the player's move is valid
+    if (!moves.includes(playerMoveInput as Move)) {
+      yield sys.print("Please type rock, paper, or scissors!");
+      return;
+    }
+
+    const playerMove = playerMoveInput as Move;
+
     const randomNumber = Math.floor(Math.random() * moves.length);
     const computerMove = moves[randomNumber];
 
     yield sys.print("The computer picked " + computerMove + ".");
 
-      //tie
+    //tie
     if (playerMove === computerMove) {
       yield sys.print("It's a tie");
     }
@@ -34,7 +43,7 @@ const myProgram: ProgramModule = {
     ) {
       yield sys.print("You win!");
     }
-      //computer win
+    //computer win
     else {
       yield sys.print("The computer wins!");
     }

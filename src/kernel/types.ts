@@ -19,7 +19,12 @@ import type { Kernel } from "./kernel";
  *   blocked    -> waiting for something (a timer, or user input)
  *   terminated -> finished
  */
-export type ProcessState = "new" | "ready" | "running" | "blocked" | "terminated";
+export type ProcessState =
+  | "new"
+  | "ready"
+  | "running"
+  | "blocked"
+  | "terminated";
 
 /**
  * A Syscall ("system call") is a *request* a program makes to the kernel.
@@ -41,7 +46,8 @@ export type Syscall =
   | { type: "sleep"; ms: number }
   | { type: "spawn"; program: string; args: string[] }
   | { type: "exit" }
-  | { type: "getPid" };
+  | { type: "getPid" }
+  | { type: "random"; max: number };
 
 /**
  * The `sys` toolbox handed to every program. These helpers just *build*
@@ -62,6 +68,8 @@ export interface Sys {
   exit(): Syscall;
   /** Resumes with this program's own process id (a number). */
   getPid(): Syscall;
+  //get randomnumber from 0 up to 1
+  random(max: number): Syscall;
 }
 
 /**
