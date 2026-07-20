@@ -14,6 +14,7 @@
 // ===========================================================================
 
 import { Emitter } from "./events";
+import type { FileSystem } from "./filesystem";
 import { createProcess, type Process } from "./process";
 import { Scheduler } from "./scheduler";
 import { makeSys } from "./syscalls";
@@ -45,6 +46,7 @@ export class Kernel {
   private sys: Sys = makeSys();
   /** All the programs `run`/`spawn` can start, keyed by name. */
   private programs = new Map<string, ProgramModule>();
+  private fs!: FileSystem;
 
   /** Wired to the terminal in main.ts; called whenever a program prints. */
   onPrint: (text: string) => void = () => {};
@@ -55,6 +57,9 @@ export class Kernel {
   /** Tell the kernel which programs exist (called once at boot). */
   setPrograms(programs: Map<string, ProgramModule>): void {
     this.programs = programs;
+  }
+  setFileSystem(fs: FileSystem): void {
+    this.fs = fs;
   }
 
   /** All known programs, sorted — used by the `help` command. */
@@ -182,6 +187,16 @@ export class Kernel {
       case "getPid":
         // Non-blocking: resume the program with its own pid.
         proc.resumeValue = proc.pid;
+        this.makeReady(proc);
+        break;
+
+      case "readFile":
+        proc.resumeValue = this.fs.read(call.path);
+        this.makeReady(proc);
+        break;
+
+      case "writeFile":
+        proc.resumeValue = this.fs.writeFile(call.path, call.contents);
         this.makeReady(proc);
         break;
 

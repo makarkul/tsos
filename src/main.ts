@@ -35,6 +35,7 @@ function boot(): void {
 
   const kernel = new Kernel();
   kernel.setPrograms(programs);
+  kernel.setFileSystem(fs);
 
   // 2. Build the UI.
   const ui = new TerminalUI(termEl);

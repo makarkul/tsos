@@ -47,8 +47,9 @@ export type Syscall =
   | { type: "spawn"; program: string; args: string[] }
   | { type: "exit" }
   | { type: "getPid" }
-  | { type: "random"; max: number };
-
+  | { type: "random"; max: number }
+  | { type: "readFile"; path: string }
+  | { type: "writeFile"; path: string; contents: string };
 /**
  * The `sys` toolbox handed to every program. These helpers just *build*
  * Syscall requests — the kernel is what actually carries them out.
@@ -70,6 +71,10 @@ export interface Sys {
   getPid(): Syscall;
   //get randomnumber from 0 up to 1
   random(max: number): Syscall;
+  //read a file
+  readFile(path: string): Syscall;
+  //create/overwrite files
+  writeFile(path: string, contents: string): Syscall;
 }
 
 /**

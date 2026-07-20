@@ -19,5 +19,11 @@ export function makeSys(): Sys {
     exit: () => ({ type: "exit" }),
     getPid: () => ({ type: "getPid" }),
     random: (max) => ({ type: "random", max }),
+    readFile: (path) => ({ type: "readFile", path }),
+    writeFile: (path, contents) => ({
+      type: "writeFile",
+      path,
+      contents,
+    }),
   };
 }
