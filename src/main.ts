@@ -56,6 +56,12 @@ function boot(): void {
   ui.onLine((line) => {
     if (!kernel.deliverInput(line)) shell.run(line);
   });
+  ui.onKey((key) => {
+    kernel.deliverKey(key);
+  });
+  kernel.changed.on(() => {
+    ui.setRawMode(kernel.isRawMode());
+  });
 
   // 5. Lift off.
   for (const line of BANNER) ui.println(line);

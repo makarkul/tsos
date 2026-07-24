@@ -37,6 +37,10 @@ export class Kernel {
   private readers: Process[] = [];
   /** Lines the user typed that are waiting to be handed to a reader. */
   private inputQueue: string[] = [];
+  //blocked readKey processes
+  private keyReaders: Process[] = [];
+  private keyQueue: string[] = [];
+  private rawMode = false;
 
   private nextPid = 1;
   private tick = 0;
@@ -60,6 +64,9 @@ export class Kernel {
   }
   setFileSystem(fs: FileSystem): void {
     this.fs = fs;
+  }
+  isRawMode(): boolean {
+    return this.rawMode;
   }
 
   /** All known programs, sorted — used by the `help` command. */
@@ -101,6 +108,11 @@ export class Kernel {
   deliverInput(line: string): boolean {
     if (this.readers.length === 0) return false;
     this.inputQueue.push(line);
+    return true;
+  }
+  deliverKey(key: string): boolean {
+    if (this.keyReaders.length === 0) return false;
+    this.keyQueue.push(key);
     return true;
   }
 
@@ -220,6 +232,15 @@ export class Kernel {
         proc.waitingOn = "read";
         this.readers.push(proc);
         break;
+      case "readKey":
+        proc.state = "blocked";
+        proc.waitingOn = "readKey";
+        this.keyReaders.push(proc);
+        break;
+      case "setRawMode":
+        this.rawMode = call.on;
+        this.makeReady(proc);
+        break;
 
       case "random":
         proc.resumeValue = Math.floor(Math.random() * call.max);
@@ -294,6 +315,11 @@ export class Kernel {
     while (this.readers.length > 0 && this.inputQueue.length > 0) {
       const proc = this.readers.shift()!;
       proc.resumeValue = this.inputQueue.shift();
+      this.makeReady(proc);
+    }
+    while (this.keyReaders.length > 0 && this.keyQueue.length > 0) {
+      const proc = this.keyReaders.shift()!;
+      proc.resumeValue = this.keyQueue.shift();
       this.makeReady(proc);
     }
   }

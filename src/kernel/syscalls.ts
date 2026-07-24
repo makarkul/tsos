@@ -14,6 +14,8 @@ export function makeSys(): Sys {
   return {
     print: (text) => ({ type: "print", text }),
     read: () => ({ type: "read" }),
+    readKey: () => ({ type: "readKey" }),
+    setRawMode: (on) => ({ type: "setRawMode", on }),
     sleep: (ms) => ({ type: "sleep", ms }),
     spawn: (program, args = []) => ({ type: "spawn", program, args }),
     exit: () => ({ type: "exit" }),

@@ -16,6 +16,8 @@ export class TerminalUI {
   private fit = new FitAddon();
   private buffer = ""; // what the user has typed so far on this line
   private onLineCb: (line: string) => void = () => {};
+  private onKeyCb: (key: string) => void = () => {};
+  private rawMode = false;
 
   constructor(container: HTMLElement) {
     this.term = new Terminal({
@@ -23,19 +25,38 @@ export class TerminalUI {
       fontFamily: 'Menlo, Consolas, "DejaVu Sans Mono", monospace',
       fontSize: 14,
       convertEol: true,
-      theme: { background: "#0b1020", foreground: "#d7e0ff", cursor: "#5ad1ff" },
+      theme: {
+        background: "#0b1020",
+        foreground: "#d7e0ff",
+        cursor: "#5ad1ff",
+      },
     });
     this.term.loadAddon(this.fit);
     this.term.open(container);
     this.fit.fit();
     window.addEventListener("resize", () => this.fit.fit());
 
-    this.term.onData((data) => this.handleInput(data));
+    this.term.onData((data) => {
+      if (this.rawMode) {
+        this.handleRawInput(data);
+      } else {
+        this.handleInput(data);
+      }
+    });
   }
 
   /** Register the function to call when the user finishes a line (Enter). */
   onLine(cb: (line: string) => void): void {
     this.onLineCb = cb;
+  }
+  //make function call whenever key is pressed
+  onKey(cb: (key: string) => void): void {
+    this.onKeyCb = cb;
+  }
+
+  //turn raw mode on/off
+  setRawMode(on: boolean): void {
+    this.rawMode = on;
   }
 
   /** Write a plain line (no prompt juggling). Used for the boot banner. */
@@ -88,6 +109,42 @@ export class TerminalUI {
         this.buffer += ch;
         this.term.write(ch);
       }
+    }
+  }
+  private handleRawInput(data: string): void {
+    switch (data) {
+      case "\r":
+      case "\n":
+        this.onKeyCb("Enter");
+        break;
+      case "\x7f":
+        this.onKeyCb("Backspace");
+        break;
+      case "\x1b[A":
+        this.onKeyCb("ArrowUp");
+        break;
+
+      case "\x1b[B":
+        this.onKeyCb("ArrowDown");
+        break;
+
+      case "\x1b[C":
+        this.onKeyCb("ArrowRight");
+        break;
+      case "\x1b[D":
+        this.onKeyCb("ArrowLeft");
+        break;
+
+      case "\x1b":
+        this.onKeyCb("Escape");
+        break;
+      case "\x13":
+        this.onKeyCb("Ctrl+S");
+        break;
+
+      default:
+        this.onKeyCb(data);
+        break;
     }
   }
 }

@@ -43,6 +43,8 @@ export type ProcessState =
 export type Syscall =
   | { type: "print"; text: string }
   | { type: "read" }
+  | { type: "readKey" }
+  | { type: "setRawMode"; on: boolean }
   | { type: "sleep"; ms: number }
   | { type: "spawn"; program: string; args: string[] }
   | { type: "exit" }
@@ -61,6 +63,9 @@ export interface Sys {
   print(text: string): Syscall;
   /** Pause until the user types a line; resumes with that line (a string). */
   read(): Syscall;
+  readKey(): Syscall;
+  //keyboard mode on/off
+  setRawMode(on: boolean): Syscall;
   /** Pause this program for `ms` milliseconds. */
   sleep(ms: number): Syscall;
   /** Start another program; resumes with its process id (a number). */
