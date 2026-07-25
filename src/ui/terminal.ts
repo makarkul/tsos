@@ -68,6 +68,9 @@ export class TerminalUI {
   showPrompt(): void {
     this.term.write(PROMPT);
   }
+  write(text: string): void {
+    this.term.write(text);
+  }
 
   /**
    * Print a line of OUTPUT (e.g. from a running program) without clobbering
@@ -76,15 +79,20 @@ export class TerminalUI {
    * This is the same trick real shells use.
    */
   print(text: string): void {
-    this.term.write("\r\x1b[K"); // go to line start, clear to end of line
+    this.term.write("\r\x1b[K");
     this.term.write(text + "\r\n");
-    this.term.write(PROMPT + this.buffer);
+
+    if (!this.rawMode) {
+      this.term.write(PROMPT + this.buffer);
+    }
   }
 
-  /** Clear the whole screen and redraw the prompt. */
   clear(): void {
     this.term.clear();
-    this.term.write("\r\x1b[K" + PROMPT + this.buffer);
+    this.buffer = "";
+    if (!this.rawMode) {
+      this.term.write(PROMPT);
+    }
   }
 
   // Handle raw keystrokes from xterm, one chunk at a time.

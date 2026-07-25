@@ -43,6 +43,8 @@ function boot(): void {
 
   // 3. Connect them: when a program prints, show it in the terminal.
   kernel.onPrint = (text) => ui.print(text);
+  kernel.onClear = () => ui.clear();
+  kernel.onWrite = (text) => ui.write(text);
 
   const shell = new Shell(
     fs,

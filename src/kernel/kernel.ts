@@ -54,6 +54,11 @@ export class Kernel {
 
   /** Wired to the terminal in main.ts; called whenever a program prints. */
   onPrint: (text: string) => void = () => {};
+  //clear terminal screen connected to main
+  onClear: () => void = () => {};
+
+  //raw writing in main.ts
+  onWrite: (text: string) => void = () => {};
 
   /** Fires after every change so the dashboard can redraw. */
   readonly changed = new Emitter<KernelSnapshot>();
@@ -193,6 +198,15 @@ export class Kernel {
       case "print":
         // Non-blocking: print and go straight back to the ready queue.
         this.onPrint(call.text);
+        this.makeReady(proc);
+        break;
+      case "clearScreen":
+        this.onClear();
+        this.makeReady(proc);
+        break;
+
+      case "write":
+        this.onWrite(call.text);
         this.makeReady(proc);
         break;
 

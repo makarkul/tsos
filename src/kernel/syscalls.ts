@@ -13,6 +13,8 @@ import type { Sys } from "./types";
 export function makeSys(): Sys {
   return {
     print: (text) => ({ type: "print", text }),
+    write: (text) => ({ type: "write", text }),
+    clearScreen: () => ({ type: "clearScreen" }),
     read: () => ({ type: "read" }),
     readKey: () => ({ type: "readKey" }),
     setRawMode: (on) => ({ type: "setRawMode", on }),

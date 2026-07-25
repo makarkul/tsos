@@ -42,6 +42,8 @@ export type ProcessState =
  */
 export type Syscall =
   | { type: "print"; text: string }
+  | { type: "write"; text: string }
+  | { type: "clearScreen" }
   | { type: "read" }
   | { type: "readKey" }
   | { type: "setRawMode"; on: boolean }
@@ -52,6 +54,7 @@ export type Syscall =
   | { type: "random"; max: number }
   | { type: "readFile"; path: string }
   | { type: "writeFile"; path: string; contents: string };
+
 /**
  * The `sys` toolbox handed to every program. These helpers just *build*
  * Syscall requests — the kernel is what actually carries them out.
@@ -61,6 +64,10 @@ export type Syscall =
 export interface Sys {
   /** Write one line to the terminal. */
   print(text: string): Syscall;
+  //write text without adding new lines
+  write(text: string): Syscall;
+  //clear terminal screen
+  clearScreen(): Syscall;
   /** Pause until the user types a line; resumes with that line (a string). */
   read(): Syscall;
   readKey(): Syscall;
