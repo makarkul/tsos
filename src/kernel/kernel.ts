@@ -311,6 +311,7 @@ export class Kernel {
     this.scheduler.remove(proc);
     this.sleeping = this.sleeping.filter((p) => p !== proc);
     this.readers = this.readers.filter((p) => p !== proc);
+    this.keyReaders = this.keyReaders.filter((p) => p !== proc);
   }
 
   /** Move finished sleepers and fed readers back into the ready queue. */

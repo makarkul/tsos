@@ -149,7 +149,9 @@ export class TerminalUI {
       case "\x13":
         this.onKeyCb("Ctrl+S");
         break;
-
+      case "\x11":
+        this.onKeyCb("Ctrl+Q");
+        break;
       default:
         this.onKeyCb(data);
         break;
